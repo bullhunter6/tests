@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar for Filters -->
+        <div class="col-lg-2 bg-light p-3" style="border-right: 1px solid #ddd;">
+            <h5>Filter Articles</h5>
+            <form method="get" action="/">
+                <div class="form-group">
+                    <label for="date">Filter by Date</label>
+                    <input type="date" class="form-control" id="date" name="date" value="{{ current_date }}">
+                </div>
+                <div class="form-group">
+                    <label for="source">Filter by Source</label>
+                    <select class="form-control" id="source" name="source">
+                        <option value="">Select Source</option>
+                        <option value="ESMA" {% if current_source == 'ESMA' %}selected{% endif %}>ESMA</option>
+                        <option value="FCA" {% if current_source == 'FCA' %}selected{% endif %}>FCA</option>
+                        <option value="Moody's" {% if current_source == "Moody's" %}selected{% endif %}>Moody's</option>
+                        <option value="SEC" {% if current_source == 'SEC' %}selected{% endif %}>SEC</option>
+                        <option value="World Economic Forum" {% if current_source == 'World Economic Forum' %}selected{% endif %}>World Economic Forum</option>
+                        <option value="Reuters" {% if current_source == 'Reuters' %}selected{% endif %}>Reuters</option>
+                        <option value="Khaleej Times" {% if current_source == 'Khaleej Times' %}selected{% endif %}>Khaleej Times</option>
+                        <option value="The National News" {% if current_source == 'The National News' %}selected{% endif %}>The National News</option>
+                        <option value="SCA" {% if current_source == 'SCA' %}selected{% endif %}>SCA</option>
+                        <option value="KPMG" {% if current_source == 'KPMG' %}selected{% endif %}>KPMG</option>
+                        <option value="McKinsey" {% if current_source == 'McKinsey' %}selected{% endif %}>McKinsey</option>
+                        <option value="World Bank" {% if current_source == 'World Bank' %}selected{% endif %}>World Bank</option>
+                        <option value="IMF" {% if current_source == 'IMF' %}selected{% endif %}>IMF</option>
+                        <option value="IFC" {% if current_source == 'IFC' %}selected{% endif %}>IFC</option>
+                        <option value="Fitch" {% if current_source == 'Fitch' %}selected{% endif %}>Fitch</option>
+                        <option value="BCG" {% if current_source == 'BCG' %}selected{% endif %}>BCG</option>
+                        <!-- Add more sources as needed -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                <a href="/" class="btn btn-secondary btn-block">Reset</a>
+            </form>
+        </div>
+
+        <!-- Main Content for Articles -->
+        <div class="col-lg-10">
+            <div class="text-center mt-4 mb-4">
+                <h1>{{ headline }}</h1>
+            </div>
+            <div class="row">
+                {% for article in articles %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ article[3] }}" target="_blank">{{ article[0] }}</a>
+                            </h5>
+                            <p class="card-text">{{ article[2] }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ article[1] }} - {{ article[4] }}</small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Keywords: {{ article[5] }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

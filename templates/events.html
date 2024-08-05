@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar for Filters -->
+        <div class="col-lg-2 bg-light p-3" style="border-right: 1px solid #ddd;">
+            <h5>Filter Events</h5>
+            <form method="get" action="/events">
+                <div class="form-group">
+                    <label for="date">Filter by Date</label>
+                    <input type="date" class="form-control" id="date" name="date" value="{{ current_date }}">
+                </div>
+                <div class="form-group">
+                    <label for="source">Filter by Source</label>
+                    <select class="form-control" id="source" name="source">
+                        <option value="">Select Source</option>
+                        <option value="ADB" {% if current_source == 'ADB' %}selected{% endif %}>ADB</option>
+                        <option value="World Bank" {% if current_source == 'World Bank' %}selected{% endif %}>World Bank</option>
+                        <!-- Add more sources as needed -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                <a href="/events" class="btn btn-secondary btn-block">Reset</a>
+            </form>
+        </div>
+
+        <!-- Main Content for Events -->
+        <div class="col-lg-10">
+            <div class="text-center mt-4 mb-4">
+                <h1>{{ headline }}</h1>
+            </div>
+            <div class="row">
+                {% for event in events %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ event['link'] }}" target="_blank">{{ event['title'] }}</a>
+                            </h5>
+                            <p class="card-text"><strong>Start Date:</strong> {{ event['start_date'] }}</p>
+                            <p class="card-text"><strong>End Date:</strong> {{ event['end_date'] }}</p>
+                            <p class="card-text"><strong>Location:</strong> {{ event['location'] }}</p>
+                            <p class="card-text">{{ event['details'] }}</p>
+                            <p class="card-text">
+                                <small class="text-muted">{{ event['source'] }}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
